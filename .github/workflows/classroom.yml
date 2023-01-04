@@ -43,7 +43,7 @@ jobs:
         timeout-minutes: 5
         run: ./scripts/test-script.sh
         env:
-          VARIANT: v3
+          VARIANT: <variant>
           SERVICE_NAME: payment_service
           PORT_NUMBER: 8050
 
