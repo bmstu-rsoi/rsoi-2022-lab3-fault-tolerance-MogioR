@@ -5,7 +5,7 @@ from .circuit_breaker import CircuitBreaker
 circuit_breaker = CircuitBreaker()
 
 
-def get_data_from_service(service_url, headers={}, timeout=5):
+def get_data_from_service(service_url, headers={}, timeout=10):
     if circuit_breaker.try_connect(service_url):
         try:
             response = requests.get(service_url, timeout=timeout, headers=headers)
@@ -16,7 +16,7 @@ def get_data_from_service(service_url, headers={}, timeout=5):
             return None
 
 
-def post_data_from_service(service_url, headers={}, timeout=5, data={}):
+def post_data_from_service(service_url, headers={}, timeout=10, data={}):
     if circuit_breaker.try_connect(service_url):
         try:
             response = requests.post(service_url, timeout=timeout, headers=headers, json=data)
@@ -27,7 +27,7 @@ def post_data_from_service(service_url, headers={}, timeout=5, data={}):
             return None
 
 
-def delete_data_from_service(service_url, headers={}, timeout=5):
+def delete_data_from_service(service_url, headers={}, timeout=10):
     if circuit_breaker.try_connect(service_url):
         try:
             response = requests.delete(service_url, timeout=timeout, headers=headers)

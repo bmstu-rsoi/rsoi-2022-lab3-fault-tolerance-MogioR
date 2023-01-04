@@ -31,12 +31,12 @@ async def post_rental_finish(rentalUid: str) -> Response:
 
     response = delete_data_from_service(
         'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
-        + '/api/v1/cars/' + rental['carUid'] + '/order', timeout=5)
+        + '/api/v1/cars/' + rental['carUid'] + '/order', timeout=10)
 
     if response is None:
         response = delete_data_from_service(
             'http://' + os.environ['RENTAL_SERVICE_HOST'] + ':' + os.environ['RENTAL_SERVICE_PORT']
-            + '/api/v1/rental/' + rentalUid + '/finish', timeout=5)
+            + '/api/v1/rental/' + rentalUid + '/finish', timeout=10)
 
         return Response(
             status=503,

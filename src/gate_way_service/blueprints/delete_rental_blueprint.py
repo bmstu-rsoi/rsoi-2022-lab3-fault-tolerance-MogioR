@@ -11,7 +11,7 @@ delete_rental_blueprint = Blueprint('delete_rental', __name__, )
 async def delete_rental(rentalUid: str) -> Response:
     response = delete_data_from_service(
         'http://' + os.environ['RENTAL_SERVICE_HOST'] + ':' + os.environ['RENTAL_SERVICE_PORT']
-        + '/api/v1/rental/'+rentalUid, timeout=5)
+        + '/api/v1/rental/'+rentalUid, timeout=10)
 
     if response is None:
         return Response(
@@ -32,7 +32,7 @@ async def delete_rental(rentalUid: str) -> Response:
 
     response = delete_data_from_service(
         'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
-        + '/api/v1/cars/' + rental['carUid'] + '/order', timeout=5)
+        + '/api/v1/cars/' + rental['carUid'] + '/order', timeout=10)
 
     if response is None:
         return Response(
@@ -45,7 +45,7 @@ async def delete_rental(rentalUid: str) -> Response:
 
     response = delete_data_from_service(
         'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
-        + '/api/v1/payment/' + rental['paymentUid'], timeout=5)
+        + '/api/v1/payment/' + rental['paymentUid'], timeout=10)
 
     if response is None:
         return Response(

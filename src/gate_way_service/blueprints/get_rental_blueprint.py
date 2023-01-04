@@ -29,7 +29,7 @@ async def get_rental(rentalUid: str) -> Response:
 
     response = get_data_from_service(
         'http://' + os.environ['RENTAL_SERVICE_HOST'] + ':' + os.environ['RENTAL_SERVICE_PORT']
-        + '/api/v1/rental/'+rentalUid, timeout=5, headers={'X-User-Name': request.headers['X-User-Name']})
+        + '/api/v1/rental/'+rentalUid, timeout=10, headers={'X-User-Name': request.headers['X-User-Name']})
     if response is None:
         return Response(
             status=503,
@@ -49,7 +49,7 @@ async def get_rental(rentalUid: str) -> Response:
 
     response = get_data_from_service(
         'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
-        + '/api/v1/cars/' + rental['carUid'], timeout=5)
+        + '/api/v1/cars/' + rental['carUid'], timeout=10)
     if response is not None and int(response.status_code / 100) == 2:
         rental['car'] = car_simplify(response.json())
     elif int(response.status_code / 100) != 2:
@@ -64,7 +64,7 @@ async def get_rental(rentalUid: str) -> Response:
 
     response = get_data_from_service(
         'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
-        + '/api/v1/payment/' + rental['paymentUid'], timeout=5)
+        + '/api/v1/payment/' + rental['paymentUid'], timeout=10)
     if response is not None and int(response.status_code / 100) == 2:
         rental['payment'] = response.json()
     elif int(response.status_code / 100) != 2:

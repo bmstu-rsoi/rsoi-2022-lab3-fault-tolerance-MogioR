@@ -55,7 +55,7 @@ async def post_rentals() -> Response:
 
     response = post_data_from_service(
         'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
-        + '/api/v1/cars/' + body['carUid'] + '/order', timeout=5)
+        + '/api/v1/cars/' + body['carUid'] + '/order', timeout=10)
 
     if response is None:
         return Response(
@@ -80,12 +80,12 @@ async def post_rentals() -> Response:
 
     response = post_data_from_service(
         'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
-        + '/api/v1/payment/', timeout=5, data={'price': price})
+        + '/api/v1/payment/', timeout=10, data={'price': price})
 
     if response is None:
         response = delete_data_from_service(
             'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
-            + '/api/v1/cars/' + body['carUid'] + '/order', timeout=5)
+            + '/api/v1/cars/' + body['carUid'] + '/order', timeout=10)
 
         return Response(
             status=503,
@@ -100,15 +100,15 @@ async def post_rentals() -> Response:
 
     response = post_data_from_service(
         'http://' + os.environ['RENTAL_SERVICE_HOST'] + ':' + os.environ['RENTAL_SERVICE_PORT']
-        + '/api/v1/rental/', timeout=5, data=body, headers={'X-User-Name': request.headers['X-User-Name']})
+        + '/api/v1/rental/', timeout=10, data=body, headers={'X-User-Name': request.headers['X-User-Name']})
 
     if response is None:
         response = delete_data_from_service(
             'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
-            + '/api/v1/cars/' + body['carUid'] + '/order', timeout=5)
+            + '/api/v1/cars/' + body['carUid'] + '/order', timeout=10)
         response = delete_data_from_service(
             'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
-            + '/api/v1/payment/' + body['paymentUid'], timeout=5)
+            + '/api/v1/payment/' + body['paymentUid'], timeout=10)
         return Response(
             status=503,
             content_type='application/json',
