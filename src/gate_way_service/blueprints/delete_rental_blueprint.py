@@ -46,14 +46,14 @@ async def delete_rental(rentalUid: str) -> Response:
     if response is None:
         response = post_data_from_service(
             'http://' + os.environ['QUEUE_SERVICE_HOST'] + ':' + os.environ['QUEUE_SERVICE_PORT']
-            + '/api/v1/command_delete/', timeout=10,
-            data=json.dumps({
+            + '/api/v1/command_delete', timeout=10,
+            data={
                 'url': (
                         'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
                         + '/api/v1/payment/' + rental['paymentUid']
                 ),
                 'headers': {}
-            }))
+            })
 
     return Response(
         status=204
