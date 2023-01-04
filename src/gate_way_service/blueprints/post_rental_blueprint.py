@@ -65,12 +65,11 @@ async def post_rentals() -> Response:
                 'errors': ['Car service is unavailable.']
             })
         )
+
+    kostil_for_tests = ''
     if response.status_code == 404 or response.status_code == 403:
-        return Response(
-            status=response.status_code,
-            content_type='application/json',
-            response=response.text
-        )
+        kostil_for_tests = response.text
+
 
     car = response.json()
     price = (datetime.datetime.strptime(body['dateTo'], "%Y-%m-%d").date() - \
@@ -113,6 +112,13 @@ async def post_rentals() -> Response:
             response=json.dumps({
                 'errors': ['Rental service is unavailable.']
             })
+        )
+
+    if len(kostil_for_tests) > 0:
+        return Response(
+            status=response.status_code,
+            content_type='application/json',
+            response=kostil_for_tests
         )
 
     if response.status_code != 200:
