@@ -50,31 +50,32 @@ async def get_rental(rentalUid: str) -> Response:
     response = get_data_from_service(
         'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
         + '/api/v1/cars/' + rental['carUid'], timeout=10)
-    if response is not None and int(response.status_code / 100) == 2:
+    if response is None:
+        rental['car'] = rental['carUid']
+    elif int(response.status_code / 100) == 2:
         rental['car'] = car_simplify(response.json())
-    elif int(response.status_code / 100) != 2:
+    else:
         return Response(
             status=response.status_code,
             content_type='application/json',
             response=response.text
         )
-    else:
-        rental['car'] = rental['carUid']
     del rental['carUid']
 
     response = get_data_from_service(
         'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
         + '/api/v1/payment/' + rental['paymentUid'], timeout=10)
-    if response is not None and int(response.status_code / 100) == 2:
+    if response is None:
+        rental['payment'] = rental['paymentUid']
+    elif int(response.status_code / 100) == 2:
         rental['payment'] = response.json()
-    elif int(response.status_code / 100) != 2:
+    else:
         return Response(
             status=response.status_code,
             content_type='application/json',
             response=response.text
         )
-    else:
-        rental['payment'] = rental['paymentUid']
+
     del rental['paymentUid']
 
     return Response(
