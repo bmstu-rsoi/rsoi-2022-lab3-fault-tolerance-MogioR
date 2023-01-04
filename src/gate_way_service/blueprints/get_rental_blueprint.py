@@ -66,7 +66,7 @@ async def get_rental(rentalUid: str) -> Response:
         'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
         + '/api/v1/payment/' + rental['paymentUid'], timeout=10)
     if response is None:
-        rental['payment'] = rental['paymentUid']
+        rental['payment'] = {}
     elif int(response.status_code / 100) == 2:
         rental['payment'] = response.json()
     else:
