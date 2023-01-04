@@ -36,13 +36,14 @@ jobs:
         with:
           time: '15s'
 
+
       # TODO setup variant, service and port
 
       - name: Run API Tests
         timeout-minutes: 5
         run: ./scripts/test-script.sh
         env:
-          VARIANT: <variant>
+          VARIANT: v3
           SERVICE_NAME: payment_service
           PORT_NUMBER: 8050
 

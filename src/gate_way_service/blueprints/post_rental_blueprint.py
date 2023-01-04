@@ -66,9 +66,12 @@ async def post_rentals() -> Response:
             })
         )
 
-    kostil_for_tests = ''
     if response.status_code == 404 or response.status_code == 403:
-        kostil_for_tests = response.text
+        return Response(
+            status=response.status_code,
+            content_type='application/json',
+            response=response.text
+        )
 
 
     car = response.json()
@@ -114,12 +117,6 @@ async def post_rentals() -> Response:
             })
         )
 
-    if len(kostil_for_tests) > 0:
-        return Response(
-            status=response.status_code,
-            content_type='application/json',
-            response=kostil_for_tests
-        )
 
     if response.status_code != 200:
         return Response(
