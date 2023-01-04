@@ -36,7 +36,6 @@ jobs:
         with:
           time: '15s'
 
-
       # TODO setup variant, service and port
 
       - name: Run API Tests
