@@ -15,7 +15,7 @@ class RentalModel(BaseModel):
     def to_dict(self):
         return {
             "rentalUid": str(self.rental_uid),
-            # "username": str(self.username),
+            "username": str(self.username),
             "paymentUid": str(self.payment_uid),
             "carUid": str(self.car_uid),
             "dateFrom": str(self.date_from),
