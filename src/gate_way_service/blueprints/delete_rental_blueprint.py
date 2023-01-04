@@ -15,7 +15,7 @@ async def delete_rental(rentalUid: str) -> Response:
 
     if response is None:
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Rental service is unavailable.']
@@ -36,7 +36,7 @@ async def delete_rental(rentalUid: str) -> Response:
 
     if response is None:
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Cars service is unavailable.']
@@ -49,7 +49,7 @@ async def delete_rental(rentalUid: str) -> Response:
 
     if response is None:
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Payment service is unavailable.']

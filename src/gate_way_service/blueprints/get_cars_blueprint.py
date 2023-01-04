@@ -20,7 +20,7 @@ async def get_cars() -> Response:
         )
     else:
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Cars service is unavailable.']

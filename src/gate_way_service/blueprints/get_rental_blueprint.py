@@ -32,7 +32,7 @@ async def get_rental(rentalUid: str) -> Response:
         + '/api/v1/rental/'+rentalUid, timeout=5, headers={'X-User-Name': request.headers['X-User-Name']})
     if response is None:
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Rental service is unavailable.']

@@ -29,7 +29,7 @@ services:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "postgres"
       DATA_BASE_USER: "postgres"
-      DATA_BASE_PASS: "CYzRpVY0LUBHfeatDYDk"
+      DATA_BASE_PASS: "8Rvbs9i9obYzU5cv"
       DATA_BASE_HOST: "db.lwyekailhpupnhywwptq.supabase.co"
     ports:
       - "8070:8070"
@@ -44,7 +44,7 @@ services:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "postgres"
       DATA_BASE_USER: "postgres"
-      DATA_BASE_PASS: "CYzRpVY0LUBHfeatDYDk"
+      DATA_BASE_PASS: "8Rvbs9i9obYzU5cv"
       DATA_BASE_HOST: "db.lwyekailhpupnhywwptq.supabase.co"
     ports:
       - "8050:8050"
@@ -59,7 +59,7 @@ services:
       DATA_BASE_PORT: "5432"
       DATA_BASE_NAME: "postgres"
       DATA_BASE_USER: "postgres"
-      DATA_BASE_PASS: "CYzRpVY0LUBHfeatDYDk"
+      DATA_BASE_PASS: "8Rvbs9i9obYzU5cv"
       DATA_BASE_HOST: "db.lwyekailhpupnhywwptq.supabase.co"
     ports:
       - "8060:8060"

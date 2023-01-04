@@ -59,7 +59,7 @@ async def post_rentals() -> Response:
 
     if response is None:
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Car service is unavailable.']
@@ -86,10 +86,10 @@ async def post_rentals() -> Response:
             + '/api/v1/cars/' + body['carUid'] + '/order', timeout=5)
 
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
-                'errors': ['Payment service is unavailable.']
+                'message': 'Payment Service unavailable'
             })
         )
 
@@ -108,7 +108,7 @@ async def post_rentals() -> Response:
             'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
             + '/api/v1/payment/' + body['paymentUid'], timeout=5)
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Rental service is unavailable.']

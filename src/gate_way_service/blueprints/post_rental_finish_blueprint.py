@@ -15,7 +15,7 @@ async def post_rental_finish(rentalUid: str) -> Response:
 
     if response is None:
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Rental service is unavailable.']
@@ -40,7 +40,7 @@ async def post_rental_finish(rentalUid: str) -> Response:
             + '/api/v1/rental/' + rentalUid + '/finish', timeout=5)
 
         return Response(
-            status=500,
+            status=503,
             content_type='application/json',
             response=json.dumps({
                 'errors': ['Cars service is unavailable.']
