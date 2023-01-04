@@ -22,12 +22,13 @@ async def post_rental_finish(rentalUid: str) -> Response:
             )
 
         rental.status = 'FINISHED'
+        resp = json.dumps(rental.to_dict())
         rental.save()
 
         return Response(
-            status=204,
+            status=200,
             content_type='application/json',
-            response=json.dumps(rental.to_dict())
+            response=resp
         )
     except Exception as e:
         return Response(

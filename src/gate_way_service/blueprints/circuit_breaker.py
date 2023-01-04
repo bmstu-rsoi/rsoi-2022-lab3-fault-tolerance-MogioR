@@ -39,6 +39,5 @@ class CircuitBreaker:
             self.urls_data[url][1] = time.time() + CIRCUIT_BREAKER_BAN_TIME
 
     def connection_successful(self, url):
-        if self.urls_data[url][0] == -1:
-            self.urls_data[url][0] = 0
+        self.urls_data[url][0] = 0
 
