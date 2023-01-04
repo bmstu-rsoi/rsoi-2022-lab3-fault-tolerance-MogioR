@@ -51,7 +51,6 @@ services:
 
     ports:
       - "8080:8080"
-      -
   queue_service:
     build: src/queue_service
     container_name: queue_service
