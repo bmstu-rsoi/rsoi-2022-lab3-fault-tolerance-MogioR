@@ -1,5 +1,6 @@
 import os
 import json
+import time
 
 from quart import Blueprint, Response, request
 from .service_requests import delete_data_from_service
@@ -13,15 +14,13 @@ async def delete_rental(rentalUid: str) -> Response:
         'http://' + os.environ['RENTAL_SERVICE_HOST'] + ':' + os.environ['RENTAL_SERVICE_PORT']
         + '/api/v1/rental/'+rentalUid, timeout=10)
 
-    if response is None:
-        return Response(
-            status=503,
-            content_type='application/json',
-            response=json.dumps({
-                'errors': ['Rental service is unavailable.']
-            })
-        )
-    elif response.status_code != 200:
+    while response is None:
+        time.sleep(10)
+        response = delete_data_from_service(
+            'http://' + os.environ['RENTAL_SERVICE_HOST'] + ':' + os.environ['RENTAL_SERVICE_PORT']
+            + '/api/v1/rental/' + rentalUid, timeout=10)
+
+    if response.status_code != 200:
         return Response(
             status=response.status_code,
             content_type='application/json',
@@ -34,27 +33,21 @@ async def delete_rental(rentalUid: str) -> Response:
         'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
         + '/api/v1/cars/' + rental['carUid'] + '/order', timeout=10)
 
-    if response is None:
-        return Response(
-            status=503,
-            content_type='application/json',
-            response=json.dumps({
-                'errors': ['Cars service is unavailable.']
-            })
-        )
+    while response is None:
+        time.sleep(10)
+        response = delete_data_from_service(
+            'http://' + os.environ['CARS_SERVICE_HOST'] + ':' + os.environ['CARS_SERVICE_PORT']
+            + '/api/v1/cars/' + rental['carUid'] + '/order', timeout=10)
 
     response = delete_data_from_service(
         'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
         + '/api/v1/payment/' + rental['paymentUid'], timeout=10)
 
-    if response is None:
-        return Response(
-            status=503,
-            content_type='application/json',
-            response=json.dumps({
-                'errors': ['Payment service is unavailable.']
-            })
-        )
+    while response is None:
+        time.sleep(10)
+        response = delete_data_from_service(
+            'http://' + os.environ['PAYMENT_SERVICE_HOST'] + ':' + os.environ['PAYMENT_SERVICE_PORT']
+            + '/api/v1/payment/' + rental['paymentUid'], timeout=10)
 
     return Response(
         status=204
